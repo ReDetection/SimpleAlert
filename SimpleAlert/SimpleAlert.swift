@@ -108,6 +108,7 @@ public class SimpleAlert {
         public var configContainerWidth: (() -> CGFloat?)?
         public var configContainerCornerRadius: (() -> CGFloat?)?
         public var configContentView: ((UIView!) -> Void)?
+        public var onViewLoad: (() -> ())?
         
         public private(set) var actions: [Action] = []
         public private(set) var textFields: [UITextField] = []
@@ -191,6 +192,8 @@ public class SimpleAlert {
             cancelButtonView.clipsToBounds = true
             
             displayTargetView = contentView
+            
+            onViewLoad?()
         }
         
         public override func viewWillAppear(animated: Bool) {
