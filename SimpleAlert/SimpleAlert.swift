@@ -109,6 +109,7 @@ public class SimpleAlert {
         public var configContainerCornerRadius: (() -> CGFloat?)?
         public var configContentView: ((UIView!) -> Void)?
         public var onViewLoad: (() -> ())?
+        public var onViewAppear: (() -> ())?
         
         public private(set) var actions: [Action] = []
         public private(set) var textFields: [UITextField] = []
@@ -220,6 +221,11 @@ public class SimpleAlert {
             }
         }
         
+        public override func viewDidAppear(animated: Bool) {
+            super.viewDidAppear(animated)
+            self.onViewAppear?()
+        }
+
         public override func viewDidLayoutSubviews() {
             super.viewDidLayoutSubviews()
             
