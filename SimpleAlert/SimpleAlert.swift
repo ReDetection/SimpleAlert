@@ -50,6 +50,8 @@ open class AlertController: UIViewController {
     open var configContainerWidth: (() -> CGFloat?)?
     open var configContainerCornerRadius: (() -> CGFloat?)?
     open var configContentView: ((UIView?) -> Void)?
+    public var onViewLoad: (() -> ())?
+    public var onViewAppear: (() -> ())?
     
     open fileprivate(set) var actions: [AlertAction] = []
     open fileprivate(set) var textFields: [UITextField] = []
@@ -134,6 +136,8 @@ open class AlertController: UIViewController {
         cancelButtonView.clipsToBounds = true
         
         displayTargetView = contentView
+
+        onViewLoad?()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -158,6 +162,11 @@ open class AlertController: UIViewController {
                 self?.dismiss()
             }
         }
+    }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        onViewAppear?()
     }
     
     open override func viewDidLayoutSubviews() {
